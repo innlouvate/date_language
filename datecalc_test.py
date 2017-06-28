@@ -25,7 +25,9 @@ def days(n):
     return timedelta(days=n)
 
 today = date.today()
-assert e("today") == ("DateValue", today)
-assert e("tomorrow") == ("DateValue", today + days(1))
-assert e("2 days") == ("LengthValue", 2)
-assert e("3 weeks") == ("LengthValue", 21)
+# assert e("today") == ("DateValue", today)
+# assert e("tomorrow") == ("DateValue", today + days(1))
+# assert e("2 days") == ("LengthValue", 2)
+# assert e("3 weeks") == ("LengthValue", 21)
+# assert e("today + 3 days") == ("DateValue", today + days(3))
+assert e("tomorrow + 1 day") == ("DateValue", today + days(2))
