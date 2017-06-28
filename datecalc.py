@@ -16,13 +16,17 @@ def lex(chars):
         for s in chars.split(" ")
     ]
 
-def parse(tokens):
-    if tokens[0][0] == "NumberToken":
-        return ("LengthTree", tokens[0][1], tokens[1][1])
-    elif len(tokens) <2:
-        return ("WordTree", tokens[0][1])
-    elif tokens[1][0] == "OperatorToken":
-        return ("OperatorTree", tokens[1][1], parse([tokens[0]]), parse([tokens[2], tokens[3]]) )
+def parse(tokens, so_far=None):
+    if len(tokens) == 0:
+        return so_far
+    t = tokens[0]
+    r = tokens[1:]
+    if t[0] == "NumberToken":
+        return ("LengthTree", t[1], r[0][1])
+    elif t[0] == "OperatorToken":
+        return ("OperatorTree", t[1], so_far, parse(r))
+    elif t[0] == "WordToken":
+        return parse(r, ("WordTree", tokens[0][1]))
 
 def period(unit):
     if unit == "days":
