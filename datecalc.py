@@ -20,9 +20,15 @@ def parse(tokens):
     else:
         return ("WordTree", tokens[0][1])
 
+def period(unit):
+    if unit == "days":
+        return 1
+    elif unit == "weeks":
+        return 7
+
 def evaluate(tree):
     if tree[0] == "LengthTree":
-        return ("LengthValue", int(tree[1]))
+        return ("LengthValue", int(tree[1]) * period(tree[2]))
     elif tree[1] == "today":
         return ("DateValue", date.today())
     elif tree[1] == "tomorrow":
