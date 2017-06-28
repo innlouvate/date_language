@@ -1,5 +1,6 @@
 # --imports --
 from datetime import date, timedelta
+import sys
 import operator
 
 # -- functions --
@@ -32,7 +33,7 @@ def parse(tokens, so_far=None):
 def period(unit):
     if unit == "days" or unit == "day":
         return 1
-    elif unit == "weeks" or uit == "week":
+    elif unit == "weeks" or unit == "week":
         return 7
 
 def get_operator(op):
@@ -51,3 +52,20 @@ def evaluate(tree):
             return ("DateValue", date.today())
         elif tree[1] == "tomorrow":
             return ("DateValue", date.today() + timedelta(days=1))
+
+def pretty(value):
+    if value[0] == "DateValue":
+        return value[1].strftime("%Y-%m-%d (%A)")
+    else:
+        return "%s days" % value[1]
+
+
+# -- main --
+while True:
+    ln = sys.stdin.readline()
+    if ln is None or ln.strip() == "":
+        break
+    sys.stdout.write(
+        "%s\n" %
+        pretty(evaluate(parse(lex(ln.strip()))))
+    )
